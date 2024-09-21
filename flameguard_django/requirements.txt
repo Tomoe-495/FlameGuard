@@ -1,0 +1,4 @@
+django
+pytest-warnings
+scikit-learn==1.3.2
+pandas

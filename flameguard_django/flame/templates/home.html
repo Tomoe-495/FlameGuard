@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Fire Prediction{% endblock %}
+
+{% block style %}
+
+<style>
+.main-div{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+.form-div{
+    background-color: #F5DFA4;
+    padding: 30px 100px;
+    border-radius: 10px;
+    text-align: center
+}
+.form-div h1{
+    color: rgb(50, 50, 50);
+    margin: 0
+}
+.form-div p{
+    margin: 0
+}
+.form-div .line{
+    height: 1px;
+    width: 100%;
+    background: rgba(0, 0, 0, .1);
+    margin: 10px 0
+}
+.row{
+    display: flex;
+    justify-content: center;
+    gap: 10px
+}
+.row div{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+.row div input{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #000;
+    width: 100px;
+    text-align: center;
+    padding: 5px 0
+}
+.row div input:focus{
+    outline: none
+}
+.form-div button{
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 7px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-weight: 600;
+    color: rgb(35, 35, 35);
+}
+.prob{
+    padding: 10px 0;
+    color: rgb(50, 50, 50);
+    font-weight: 600;
+    border: 1px solid rgba(0, 0, 0, .1)
+}
+.form-div form{
+    margin-bottom: 10px
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class='main-div'>
+   
+    <div class='form-div'>
+        <h1>Forest Fire Prediction</h1>
+        <p>Predict the Probability of Forest Fire Occurence</p>
+        <div class='line'></div>
+            <form method='post' action='prediction'>
+            {% csrf_token %}
+
+            <div class='row'>
+
+                <div>
+                    <label>Temperature</label>
+                    <input type='number' name='temp' />
+                </div>
+
+                <div>
+                    <label>Oxygen</label>
+                    <input type='number' name='oxy' />
+                </div>
+
+                <div>
+                    <label>Humidity</label>
+                    <input type='number' name='hum' />
+                </div>
+            </div>
+
+                <button type='submit'>Get Prediction</button>
+            
+        </form>
+        
+        {% if result != 0 %}
+            <p class="prob">Probability of Fire Occurring: {{result}}</p>
+        {% endif %}
+
+    </div>
+</div>
+
+
+{% endblock %}
