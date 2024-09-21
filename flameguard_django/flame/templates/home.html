@@ -5,113 +5,114 @@
 {% block style %}
 
 <style>
-.main-div{
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center
-}
-.form-div{
-    background-color: #F5DFA4;
-    padding: 30px 100px;
-    border-radius: 10px;
-    text-align: center
-}
-.form-div h1{
-    color: rgb(50, 50, 50);
-    margin: 0
-}
-.form-div p{
-    margin: 0
-}
-.form-div .line{
-    height: 1px;
-    width: 100%;
-    background: rgba(0, 0, 0, .1);
-    margin: 10px 0
-}
-.row{
-    display: flex;
-    justify-content: center;
-    gap: 10px
-}
-.row div{
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-}
-.row div input{
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #000;
-    width: 100px;
-    text-align: center;
-    padding: 5px 0
-}
-.row div input:focus{
-    outline: none
-}
-.form-div button{
-    border: 1px solid rgba(0, 0, 0, .1);
-    border-radius: 7px;
-    padding: 6px 10px;
-    cursor: pointer;
-    font-weight: 600;
-    color: rgb(35, 35, 35);
-}
-.prob{
-    padding: 10px 0;
-    color: rgb(50, 50, 50);
-    font-weight: 600;
-    border: 1px solid rgba(0, 0, 0, .1)
-}
-.form-div form{
-    margin-bottom: 10px
-}
-</style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
 
+    .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .container h1,
+    .container p {
+        text-align: center;
+    }
+
+    h1 {
+        color: rgb(186, 83, 46);
+    }
+
+    label {
+        margin-top: 10px;
+        display: block;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0 20px;
+        border: 1px solid #120b0b;
+        border-radius: 4px;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        margin-left: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+
+    .prediction-box {
+        margin-top: 20px;
+        padding: 10px;
+        width: 100%;
+        border: 1px solid #3f3535;
+        border-radius: 4px;
+        background: #f9f9f9;
+        text-align: center;
+    }
+
+    .prediction-box h2 {
+        margin: 0 0 10px;
+        color: #333;
+    }
+
+    .prediction-box p {
+        margin: 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+
+    .sub-head {
+        text-align: center;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
 
-<div class='main-div'>
-   
-    <div class='form-div'>
-        <h1>Forest Fire Prediction</h1>
-        <p>Predict the Probability of Forest Fire Occurence</p>
-        <div class='line'></div>
-            <form method='post' action='prediction'>
-            {% csrf_token %}
+<div class="container">
+    <h1>Forest Fire Prediction</h1>
+    <p class="sub-head">Predict the probility of Forest Fire Occurence</p>
 
-            <div class='row'>
+    <form method="post" action="prediction">
+        {% csrf_token %}
 
-                <div>
-                    <label>Temperature</label>
-                    <input type='number' name='temp' />
-                </div>
+        <label>Temperature (°C):</label>
+        <input type="number" name="temp" required>
 
-                <div>
-                    <label>Oxygen</label>
-                    <input type='number' name='oxy' />
-                </div>
+        <label>Oxygen Level (%):</label>
+        <input type="number" name="oxy" required>
 
-                <div>
-                    <label>Humidity</label>
-                    <input type='number' name='hum' />
-                </div>
-            </div>
+        <label>Humidity (%):</label>
+        <input type="number" name="hum" required>
 
-                <button type='submit'>Get Prediction</button>
-            
-        </form>
-        
-        {% if result != 0 %}
-            <p class="prob">Probability of Fire Occurring: {{result}}</p>
-        {% endif %}
+        <button type="submit">Predict</button>
 
-    </div>
+    </form>
+
+    <br>
+
+    {% if result != 0 %}
+        <div class="prediction-box">
+            <h2>Prediction Result</h2>
+            <p id="result">Probility of Fire Occurency: {{result}}</p>
+        </div>
+    {% endif %}
+
 </div>
-
 
 {% endblock %}
